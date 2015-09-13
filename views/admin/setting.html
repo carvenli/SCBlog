@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{{.SiteName}} - SCBlog</title>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <h2>{{.SiteName}}<small>{{.SubTitle}}</small></h2>
+        <nav class="xs-hide">
+            <a href="/admin"><i class="fa fa-home"></i> 首页</a>
+            <a href="/admin/new"><i class="fa fa-pencil"></i> 新建文章</a>
+            <a href="/admin/redirect"><i class="fa fa-link"></i> 内链管理</a>
+            <a class="active" href="/admin/setting"><i class="fa fa-gear"></i> 系统设置</a>
+            <a href="/admin/logout"><i class="fa fa-power-off"></i> 退出登录</a>
+        </nav>
+        <i class="fa fa-list fa-2x xs-show" id="open-menu"></i>
+    </div>
+</header>
+<section class="new container">
+    <form action="/admin/setting" method="post" id="setting-form">
+        <div class="input-form-group">
+            <input type="text" name="sitename" placeholder="博客名称" value="{{.SiteName}}">
+            <input type="text" name="subtitle" placeholder="博客子标题" value="{{.SubTitle}}">
+            <input type="text" name="keywords" placeholder="博客关键字" value="{{.Keywords}}">
+            <textarea name="description" placeholder="博客描述">{{.Description}}</textarea>
+            <input type="text" name="author" placeholder="作者名称" value="{{.Author}}">
+            <input type="text" name="email" placeholder="作者邮箱" value="{{.Email}}">
+            <button type="submit">保存文章</button>
+        </div>
+    </form>
+</section>
+<footer class="footer">
+    <p>&copy;2013双擦 让我们一起来双擦吧！。</p>
+</footer>
+<a href="javascript:;" class="fa fa-arrow-circle-up fa-3x" id="go-top"></a>
+</body>
+<script src="/static/js/jquery.min.js"></script>
+<script>
+function clickOrTouch(touchType){
+    return this.mouseOrTouch("click", touchType);
+}
+
+function mouseOrTouch(mouseType, touchType) {
+    mouseType = mouseType || "click";
+    touchType = touchType || "touchend";
+
+    var eventType = mouseType;
+
+    try {
+        document.createEvent("TouchEvent");
+        eventType = touchType;
+    } 
+    catch(e) {} 
+
+    return eventType;
+}
+
+$(function(){
+    $("#open-menu").bind(clickOrTouch(), function() {
+        $("nav").toggleClass("xs-hide");
+    });
+
+    $(window).bind('scroll',function(){
+        var scrollTop = $(window).scrollTop();
+        if(scrollTop > 100)
+            $('#go-top').show();
+        else
+            $('#go-top').hide();
+    });
+
+    $('#go-top').click(function(){
+        $('html,body').animate({
+            scrollTop: '0px'
+        }, 800);
+    });
+});
+</script>
+</html>

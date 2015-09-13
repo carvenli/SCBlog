@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="keywords" content="{{.Keywords}}">
+    <meta name="description" content="{{.Description}}">
+    <title>{{.SiteName}} - {{.SubTitle}}</title>
+    <link rel="stylesheet" href="/static/css/planeui.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<!--[if lte IE 9]>
+<div class="pui-layout pui-browsehappy">
+    <a href="javascript:;" class="pui-close" onclick="document.body.removeChild(this.parentNode);"></a>
+    <p>您正在使用 <strong class="pui-text-yellow pui-text-xl">过时</strong> 的非现代浏览器，<strong class="pui-text-success pui-text-xl">91.23%</strong> 的人选择 <a href="http://browsehappy.com/" target="_blank" class="pui-text-green-400 pui-text-xl"><strong>升级浏览器</strong></a>，获得了更好、更安全的浏览体验！</p>
+</div>
+<![endif]-->
+<header>
+    <nav>
+        <ul class="pui-menu pui-menu-inline clear blog-menu">
+            <li>
+                <a href="javascript:;"><span class="fa fa-navicon fa-2x"></span></a>
+                <ul class="pui-menu pui-menu-dropdown" style="width:200%;">
+                    <li><a href="/" class="active" title="{{.SiteName}}">首页</a></li>
+                    {{range .Pages}}
+                    <li><a href="/{{.Slug}}" title="{{.Caption}}">{{.Caption}}</a></li>
+                    {{end}}
+                    <li><a href="javascript:;" class="search">文章搜索</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div id="search-form" class="pui-hide">
+            <form action="/search" method="get" class="pui-search pui-round">
+                <input type="text" name="q" class="pui-search-keywords" placeholder="搜索...">
+                <button type="submit" class="pui-search-submit" name="submit-pui-search" value=""></button>
+            </form>
+        </div>
+    </nav>
+    <section class="top">
+        <img src="{{Gravatar .Email 80}}" class="pui-img-circle pui-img-lg">
+        <h1>{{.SiteName}}</h1>
+        <h2>{{.SubTitle}}</h2>
+    </section>
+</header>
+<section class="post-list">
+    {{if .NotSearch}}<div class="notsearch">未能找到相关文章</div>{{end}}
+    {{range .Lists}}
+    <article>
+        <header><a href="/{{.Slug}}" title="{{.Caption}}">{{.Caption}}</a></header>
+        <section>{{if .Cover}}<img src="{{.Cover}}" alt="{{.Caption}}" class="cover">{{end}}<p>{{Preview .Html 150}}</p></section>
+        <footer>
+            <img src="{{Gravatar $.Email 80}}" class="pui-img-circle pui-img-xxxs" alt="{{$.Author}}">
+            <span class="author">{{$.Author}}</span>
+            <span class="date" data-time="{{.Created}}"><span class="time"></span></span>
+            <span class="tags">{{range .Tags}}<a class="tag" href="/tag/{{. | GetTagSlug}}">{{.}}</a>{{end}}</span>
+        </footer>
+    </article>
+    {{end}}
+</section>
+{{if gt .paginator.PageNums 1}}
+<section class="pui-container pui-clear page">
+    <ul class="pui-pagination pui-pagination-bordered pui-pagination-prev-next pui-pagination-center">
+        {{if .paginator.HasPrev}}<li><a href="{{.paginator.PageLinkPrev}}" title="上一页">上一页</a></li>{{end}}
+        <li><span style="text-align:center;"> {{.paginator.Page}} / {{.paginator.PageNums}}</span></li>
+        {{if .paginator.HasNext}}<li><a href="{{.paginator.PageLinkNext}}" title="下一页">下一页</a></li>{{end}}
+    </ul>
+</section>
+{{end}}
+<footer class="footer">
+    <p>&copy;2013双擦 让我们一起来双擦吧！。<script src="http://s6.cnzz.com/stat.php?id=5508481&web_id=5508481" language="JavaScript"></script></p>
+</footer>
+<a href="javascript:;" class="fa fa-arrow-circle-up fa-3x pui-text-blue-400" id="go-top"></a>
+</body>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/planeui.min.js"></script>
+<script src="/static/js/common.js"></script>
+</html>

@@ -1,0 +1,74 @@
+*,body,html{margin:0;padding:0;font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", STHeiti, "Helvetica Neue", Helvetica, Tahoma, "Droid Sans", "wenquanyi micro hei", Heiti, "黑体";}
+a{text-decoration:none;color:#666;}
+a:active,a:hover{outline: 0;}
+.input-form-group input[type="text"],.input-form-group button{display:block;width:98.3%;padding: 10px;height: 32px;margin: 0 10px 7px 0;font-size: 14px;border: 1px solid #ddd;}
+.input-form-group button{cursor: pointer;font-size: 14px;width:100%;height:38px;font-weight: normal;line-height: 1.428;text-align: center;text-decoration: none;white-space: nowrap;vertical-align: middle;background: none;border: 1px solid transparent;-webkit-border-radius: 4px;border-radius: 4px;-webkit-touch-callout: none;color: #fff;border-color: #008EE5;background-color: #008EE5;}
+.input-form-group textarea{display:block;width:98.3%;padding: 10px;height:70px;margin: 0 10px 7px 0;font-size: 14px;border: 1px solid #ddd;}
+.input-form-group select{display:block;width:20%;padding: 10px;height:100%;margin: 0 10px 7px 0;font-size: 14px;border: 1px solid #ddd;}
+.fa-2x {font-size: 2em;}
+.fa-3x {font-size: 3em;}
+.xs-show{display: none !important;}
+.hide{display:none;}
+.label {display: inline;padding: .2em .6em .3em;font-size: 75%;font-weight: bold;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;}
+.label-info {background-color: #5bc0de;}
+.container {padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;}
+#go-top {position: fixed;bottom: 10%;right: 10%;z-index: 999;display: none;-webkit-transition: all 300ms ease-out;transition: all 300ms ease-out;}
+#go-top:hover {color: #2989D6 !important;}
+
+/** header **/
+.header{background-color:#2196F3;-webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);height:100%;color:#FFF;}
+.header h2{padding: 15px 0 0;margin-bottom: 0;font-weight:bold;font-size:24px;}
+.header small{color:#FFF;margin-left:1rem;font-size:70%;}
+.header nav{margin-bottom:20px;margin-top:20px;}
+.header nav>a{position: relative;display: inline-block;padding: 10px 15px;font-weight: 500;color:#FFF;}
+.header nav>a.active{background: #008EE5;background: rgba(0, 0, 0, .2);border-radius: 100px;padding:10px 15px;text-decoration:none;color:#FFF;}
+.header nav>a:hover{background: #42A5F5;background: rgba(0, 0, 0, .2);border-radius: 100px;padding:10px 15px;text-decoration:none;color:#FFF;}
+#open-menu {cursor: pointer;position: absolute;top: 24px;right: 15px;}
+
+/** post-list **/
+.error{text-align:center;color: #E87467;border-color: #F7D1CB;background-color: #FFE8E3;margin-top:10px;padding:10px;}
+.post-list{padding-top:30px;}
+.post-list article{color: #666;display: block;position: relative;text-align: left;margin-bottom: 15px;margin-bottom: 1.5rem;-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);-webkit-border-radius: 4px;border-radius: 4px;padding: 15px;padding: 1.5rem;overflow: auto;position: relative;color: #666;}
+.post-list article:hover{-webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);}
+.post-list article h2{font-size: 18px;font-size:1.8rem;padding-bottom:1rem;}
+.post-list article h2 small{color: #999;font-size:70%;margin-left:1rem;font-weight:normal;}
+.post-list article p{text-indent: 21pt;}
+.post-list article footer{text-align: right !important;}
+.post-list footer a{font-size: 14px;color: #666;border-color: #ddd;background-color:#fff;cursor: pointer;position: relative;margin: 0;padding: 6px 12px;}
+.post-list footer a:hover{color: #333;border-color: #ccc;background-color: #eee;}
+
+/** pagination **/
+.pagination{color: #666;list-style: none;font-size: 16px;margin: 0;padding: 0;position: relative;padding-bottom:50px;}
+.pagination:before, .pagination:after {content: " ";display: table;}
+.pagination:after {clear: both;}
+.pagination li {*float: left;*margin-right: 3px;display: inline-block;vertical-align: middle;}
+.pagination li a, .pagination li span, .pagination li input[type="button"] {padding: 0 8px;padding: 0 0.76rem;padding: 0 0.9rem \9;margin-bottom: 5px;line-height: 1.8;color: #666;text-align: center;display: inline-block;}
+.pagination li input[type="button"] {background: #fff;border: 1px solid #ddd;}
+.pagination span{cursor: not-allowed;opacity: 0.5;filter: alpha(opacity=50);-webkit-box-shadow: none;box-shadow: none;}
+.pagination.pagination-center {margin: 0 auto;text-align: center;}
+.pagination a:hover{color:#FFF;background:#CCC;}
+.pagination a.active{color:#FFF;background:#2196F3;}
+
+/** new **/
+.new{padding-top:30px;}
+.tagsinput {display:block;width:98.3%;padding: 10px;height: 32px;margin: 0 10px 7px 0;font-size: 14px;border: 1px solid #ddd;}
+.tagsinput input {display:block;width:10% !important;height:20px !important;font-size: 14px;border:none !important;}
+.tagsinput.form-control input::-moz-placeholder {color: #777;opacity: 1;}
+.tagsinput.form-control input:-ms-input-placeholder {color: #777;}
+.tagsinput.form-control input::-webkit-input-placeholder {color: #777;}
+.tagsinput input:focus {border: none !important;box-shadow: none !important;}
+.tagsinput .tag {margin-right: 2px;color: white;float:left;}
+.tagsinput .tag [data-role="remove"] {margin-left: 8px;cursor: pointer;}
+.tagsinput .tag [data-role="remove"]:after {content: "x";padding: 0px 2px;}
+.tagsinput .tag [data-role="remove"]:hover {box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);}
+.tagsinput .tag [data-role="remove"]:hover:active {box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);}
+
+/** footer **/
+.footer{padding:30px 0;width: 100%;font-size: 14px;border-top: 1px #EEE solid;color: #BBB;clear: both;position: relative;height: 32px;text-align:center;}
+
+/** media **/
+@media (max-width: 639px) {.header h2{padding-bottom:15px}.xs-show {display: block !important;}.xs-hide {display: none !important;}input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="number"], input[type="search"],input[type="date"], input[type="datetime"], input[type="time"] {width:95% !important;}.input-form-group textarea{width:95% !important;}.tagsinput{width:95% !important;}}
+@media (min-width: 768px) {.container {width: 750px;}}
+@media (min-width: 992px) {.container {width: 970px;}}
+@media (min-width: 1200px) {.container {width: 1170px;}}
+@media only screen and (max-width: 480px) {.header > h2 {padding: 5px 0;}.header nav>a{display:block;}}

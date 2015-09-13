@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{{.SiteName}} - SCBlog</title>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/js/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <h2>{{.SiteName}}<small>{{.SubTitle}}</small></h2>
+        <nav class="xs-hide">
+            <a href="/admin"><i class="fa fa-home"></i> 首页</a>
+            <a class="active" href="/admin/new"><i class="fa fa-pencil"></i> 新建文章</a>
+            <a href="/admin/redirect"><i class="fa fa-link"></i> 内链管理</a>
+            <a href="/admin/setting"><i class="fa fa-gear"></i> 系统设置</a>
+            <a href="/admin/logout"><i class="fa fa-power-off"></i> 退出登录</a>
+        </nav>
+        <i class="fa fa-list fa-2x xs-show" id="open-menu"></i>
+    </div>
+</header>
+<section class="new container">
+    <form action="/admin/edit" method="post" id="new-form">
+        <input type="hidden" name="id" value="{{.Id}}">
+        <input type="hidden" name="html" value="">
+        <div class="input-form-group">
+            <input type="text" name="caption" placeholder="文章标题" value="{{.Caption}}">
+            <input type="text" name="slug" placeholder="固定链接" value="{{.Slug}}">
+            文章类别：
+            <select name="type">
+                <option value="post"{{if .IsPost}} selected="true"{{end}}>日志</option>
+                <option value="page"{{if .IsPage}} selected="true"{{end}}>页面</option>
+            </select>
+        </div>
+        <div id="editor"></div>
+        <div class="input-form-group">
+            <input type="text" name="cover" placeholder="文章封面" value="{{.Cover}}">
+            <input type="text" name="tag" id="tag" data-role="tagsinput" placeholder="文章标签">
+            <button type="submit">保存文章</button>
+        </div>
+    </form>
+</section>
+<footer class="footer">
+    <p>&copy;2013双擦 让我们一起来双擦吧！。</p>
+</footer>
+<a href="javascript:;" class="fa fa-arrow-circle-up fa-3x" id="go-top"></a>
+</body>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/editormd/editormd.min.js"></script>
+<script src="/static/js/jquery.tagsinput.js"></script>
+<script>
+function clickOrTouch(touchType){
+    return this.mouseOrTouch("click", touchType);
+}
+
+function mouseOrTouch(mouseType, touchType) {
+    mouseType = mouseType || "click";
+    touchType = touchType || "touchend";
+
+    var eventType = mouseType;
+
+    try {
+        document.createEvent("TouchEvent");
+        eventType = touchType;
+    } 
+    catch(e) {} 
+
+    return eventType;
+}
+
+var Editor;
+
+$(function(){
+    $("#open-menu").bind(clickOrTouch(), function() {
+        $("nav").toggleClass("xs-hide");
+    });
+
+    $(window).bind('scroll',function(){
+        var scrollTop = $(window).scrollTop();
+        if(scrollTop > 100)
+            $('#go-top').show();
+        else
+            $('#go-top').hide();
+    });
+
+    $('#go-top').click(function(){
+        $('html,body').animate({
+            scrollTop: '0px'
+        }, 800);
+    });
+
+    Editor = editormd('editor',{
+        {{if .Markdown}}markdown: "{{.Markdown}}",{{end}}
+        width: '100%',
+        height: 640,
+        path: '/static/js/editormd/lib/',
+        toolbarIcons:function(){
+            return ['undo','redo','|','bold','del','italic','quote','|','h2','h3','h4','h5','h6','|','list-ul','list-ol','hr','|','link','image','code','code-block','table','datetime','html-entities','pagebreak','|','goto-line','watch','fullscreen','clear','search','|','help']
+        },
+        imageUpload : true,
+        imageUploadURL : '/admin/upload',
+        htmlDecode : true,
+        codeFold: true,
+        toc: true,
+        tocStartLevel: 2,
+        tocm: true,
+    });
+
+    $('#new-form').submit(function(){
+        $('input[name="html"]').val(Editor.getPreviewedHTML());
+        $('#new-form').submit();
+    });
+
+    $('input[name="caption"]').blur(function(){
+        if($('input[name="slug"]').val() == ''){
+            $.get('/admin/pinyin/' + $('input[name="caption"]').val(), function(result){
+                if(result.error == '0'){
+                    $('input[name="slug"]').val(result.msg);
+                }
+            });
+        }
+    });
+
+    var tag = $('#tag');
+    {{range .Tags}}tag.tagsinput('add','{{.}}');{{end}}
+});
+</script>
+</html>

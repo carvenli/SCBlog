@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>登录 - SCBlog</title>
+    <link rel="stylesheet" href="/static/css/planeui.min.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body>
+<!--[if lte IE 9]>
+<div class="pui-layout pui-browsehappy">
+    <a href="javascript:;" class="pui-close" onclick="document.body.removeChild(this.parentNode);"></a>
+    <p>您正在使用 <strong class="pui-text-yellow pui-text-xl">过时</strong> 的非现代浏览器，<strong class="pui-text-success pui-text-xl">91.23%</strong> 的人选择 <a href="http://browsehappy.com/" target="_blank" class="pui-text-green-400 pui-text-xl"><strong>升级浏览器</strong></a>，获得了更好、更安全的浏览体验！</p>
+</div>
+<![endif]-->
+<div class="pui-layout pui-flexbox pui-flex-column login-layout">
+    <div class="pui-layout pui-flex login-main">
+        <div class="pui-layout pui-layout-fixed pui-layout-fixed-1200 login-main-con">
+            <div class="login-panel">
+                <form class="pui-form login-form" action="/admin/login" method="post">
+                    <div class="pui-form-group">
+                        <h1 class="pui-text-white pui-text-normal"><i class="planeui-logo-2x pui-text-xxxxxl"></i> 登录 Login</h1>
+                        <div role="username">
+                            <input type="text" name="username" maxlength="16" class="pui-unbordered" placeholder="用户名">
+                            <i class="fa fa-user pui-text-blue"></i>
+                        </div>
+                    </div>
+                    <div class="pui-form-group">
+                        <div role="password">
+                            <input type="password" name="password" maxlength="16" class="pui-unbordered" placeholder="密码">
+                            <i class="fa fa-lock pui-text-blue"></i>
+                        </div>
+                    </div>
+                    <div class="pui-form-group">
+                        <div role="captcha">
+                            <input type="text" name="captcha" maxlength="4" class="pui-unbordered" placeholder="验证码">
+                            <i class="fa fa-shield pui-text-blue"></i>
+                            <img src="/captcha" id="vcode">
+                        </div>
+                    </div>
+                    <div class="pui-form-group">
+                        <button class="pui-btn pui-btn-default pui-bg-blue-800 pui-unbordered">登录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pui-notice-popup pui-notice-position-br pui-hide">
+    <article class="pui-notice pui-notice-icon pui-notice-icon-error">
+        <i class="pui-close pui-close-circle"></i>
+        <div class="pui-notice-content"></div>
+    </article>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/planeui.min.js"></script>
+<script>
+$(function(){
+    $('#vcode').click(function(){
+        $('#vcode').attr('src', '/captcha?' + Math.random());
+    });
+
+    $('button').click(function(){
+        if($('#username').val() == ''){
+            $('#username').focus();
+            $('#username').attr('placeholder', '请输入登录用户名');
+            $('#username').addClass('error');
+        }else if($('#password').val() == ''){
+            $('#password').focus();
+            $('#password').attr('placeholder', '请输入登录密码');
+            $('#password').addClass('error');
+        }else if($('#captcha').val() == ''){
+            $('#captcha').focus();
+            $('#captcha').attr('placeholder', '请输入验证码');
+            $('#captcha').addClass('error');
+        }else{
+            $('form').submit();
+        }
+
+        return false;
+    });
+});
+</script>
+</body>
+</html>

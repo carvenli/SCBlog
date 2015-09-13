@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{{.SiteName}} - SCBlog</title>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <h2>{{.SiteName}}<small>{{.SubTitle}}</small></h2>
+        <nav class="xs-hide">
+            <a href="/admin"><i class="fa fa-home"></i> 首页</a>
+            <a href="/admin/new"><i class="fa fa-pencil"></i> 新建文章</a>
+            <a class="active" href="/admin/redirect"><i class="fa fa-link"></i> 内链管理</a>
+            <a href="/admin/setting"><i class="fa fa-gear"></i> 系统设置</a>
+            <a href="/admin/logout"><i class="fa fa-power-off"></i> 退出登录</a>
+        </nav>
+        <i class="fa fa-list fa-2x xs-show" id="open-menu"></i>
+    </div>
+</header>
+<div class="error container hide">
+    <span>出现错误！</span>
+    <div class="msg"></div>
+</div>
+<section class="container">
+    <form action="/admin/redirect" method="post">
+        <div class="input-form-group">
+            <input type="hidden" name="id" value="{{.Id}}">
+            <input type="text" name="caption" placeholder="内链名称" value="{{.Caption}}">
+            <input type="text" name="link" placeholder="内链地址" value="{{.Link}}">
+            <button type="submit">保存内链</button>
+        </div>
+    </form>
+</section>
+<section class="post-list container">
+    {{range .Lists}}
+    <article>
+        <header><h2>{{.Caption}}</h2></header>
+        <section>{{.Link}}</section>
+        <footer><a href="javascript:if(confirm('您真的要删除此文章么?'))Del('{{.Id | GetId}}');">删除</a> | <a href="/admin/redirect/edit/{{.Id | GetId}}">修改 >></a></footer>
+    </article>
+    {{end}}
+</section>
+<footer class="footer">
+    <p>&copy;2013双擦 让我们一起来双擦吧！。</p>
+</footer>
+<a href="javascript:;" class="fa fa-arrow-circle-up fa-3x" id="go-top"></a>
+</body>
+<script src="/static/js/jquery.min.js"></script>
+<script>
+function Del(id){
+    if(id != ''){
+        $.get('/admin/redirect/del/' + id, function(result){
+            if(result.error != '0'){
+                $('.msg').html(result.error)
+                $('.error').show();
+            }else{
+                window.location = '';
+            }
+        });
+    }
+}
+
+function clickOrTouch(touchType){
+    return this.mouseOrTouch("click", touchType);
+}
+
+function mouseOrTouch(mouseType, touchType) {
+    mouseType = mouseType || "click";
+    touchType = touchType || "touchend";
+
+    var eventType = mouseType;
+
+    try {
+        document.createEvent("TouchEvent");
+        eventType = touchType;
+    } 
+    catch(e) {} 
+
+    return eventType;
+}
+
+$(function(){
+    $("#open-menu").bind(clickOrTouch(), function() {
+        $("nav").toggleClass("xs-hide");
+    });
+
+    $(window).bind('scroll',function(){
+        var scrollTop = $(window).scrollTop();
+        if(scrollTop > 100)
+            $('#go-top').show();
+        else
+            $('#go-top').hide();
+    });
+
+    $('#go-top').click(function(){
+        $('html,body').animate({
+            scrollTop: '0px'
+        }, 800);
+    });
+});
+</script>
+</html>
