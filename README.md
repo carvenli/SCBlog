@@ -16,7 +16,7 @@
 
 ```bash
 go get github.com/astaxie/beego
-github.com/axgle/mahonia
+go get github.com/axgle/mahonia
 go get gopkg.in/mgo.v2
 ```
 
