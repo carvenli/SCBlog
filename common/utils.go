@@ -115,11 +115,49 @@ func ReplaceKeys(str string) string {
 	// 获取所有内链
 	models.GetAllByQuery(models.DbRedirect, nil, &links)
 
-	// 定义一个文章列表
-	var posts []models.SC_Post
+	// 定义一个标签列表
+	var tags []models.SC_Tag
 
-	// 获取所有文章
-	models.GetAllByQuery(models.DbPost, nil, &posts)
+	// 获取所有标签
+	models.GetAllByQuery(models.DbTag, nil, &tags)
+
+	// 定义一个正则, 用以确认关键词是否已经存在链接
+	re, _ := regexp.Compile("(?is)<a\b[^>]*>(.*?)</a>")
+	// 在文本中搜索所有链接
+	mc := re.FindAllStringSubmatch(str, -1)
+
+	// 对匹配结果进行循环处理
+	for _, m := range mc {
+		// 循环内链
+		for i := 0; i < len(links); i++ {
+			// 如果内链内容与链接内容相同
+			if strings.ToLower(links[i].Caption) == m[1] {
+				// 去除此内链
+				links = append(links[:i], links[i+1:]...)
+			}
+		}
+
+		// 循环标签
+		for i := 0; i < len(tags); i++ {
+			// 如果标签内容与链接内容相同
+			if strings.ToLower(tags[i].Caption) == m[1] {
+				// 去除标签
+				tags = append(tags[:i], tags[i+1:]...)
+			}
+		}
+	}
+
+	// 对内链进行循环
+	for _, l := range links {
+		// 循环标签
+		for i := 0; i < len(tags); i++ {
+			// 如果名称与内链名称相同
+			if tags[i].Caption == l.Caption {
+				// 从标签中去除此项
+				tags = append(tags[:i], tags[i+1:]...)
+			}
+		}
+	}
 
 	return ""
 }
