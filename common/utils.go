@@ -111,18 +111,8 @@ func GetSlug(str string, isslug bool) string {
 
 // 替换关键字
 func ReplaceKeys(str string) string {
-	// 定义一个Redirect列表
-	var links []models.SC_Redirect
-
-	// 获取所有内链
-	models.GetAllByQuery(models.DbRedirect, nil, &links)
-
-	// 定义一个标签列表
-	var tags []models.SC_Tag
-
-	// 获取所有标签
-	models.GetAllByQuery(models.DbTag, nil, &tags)
-
+	// 获取关键字列表
+	keys := models.Keys
 	// 定义一个正则, 用以确认关键词是否已经存在链接
 	re, _ := regexp.Compile("(?is)<a\b[^>]*>(.*?)</a>")
 	// 在文本中搜索所有链接
@@ -130,36 +120,27 @@ func ReplaceKeys(str string) string {
 
 	// 对匹配结果进行循环处理
 	for _, m := range mc {
-		// 循环内链
-		for i := 0; i < len(links); i++ {
-			// 如果内链内容与链接内容相同
-			if strings.ToLower(links[i].Caption) == m[1] {
-				// 去除此内链
-				links = append(links[:i], links[i+1:]...)
-			}
-		}
-
-		// 循环标签
-		for i := 0; i < len(tags); i++ {
-			// 如果标签内容与链接内容相同
-			if strings.ToLower(tags[i].Caption) == m[1] {
-				// 去除标签
-				tags = append(tags[:i], tags[i+1:]...)
+		// 循环关键字
+		for _, k := range keys {
+			// 如果关键字名称与链接名称相同
+			if strings.ToLower(k.Caption) == m[1] {
+				// 去除此关键字
+				delete(keys, k.Caption)
 			}
 		}
 	}
 
-	// 对内链进行循环
-	for _, l := range links {
-		// 循环标签
-		for i := 0; i < len(tags); i++ {
-			// 如果名称与内链名称相同
-			if tags[i].Caption == l.Caption {
-				// 从标签中去除此项
-				tags = append(tags[:i], tags[i+1:]...)
-			}
+	// 对关键字进行循环
+	for _, k := range keys {
+		// 定义一个正则, 忽略大小写
+		r, _ := regexp.Compile("(?is)(" + k.Caption + ")")
+		// 如果是标签
+		if k.IsTag {
+			str = r.ReplaceAllString(str, fmt.Sprintf(`<a href="/tag/%s" title="%s">%s</a>`, k.Slug, "$0", "$0"))
+		} else {
+			str = r.ReplaceAllString(str, fmt.Sprintf(`<a href="/go/%s" target="_blank" title="%s">%s</a>`, k.Caption, "$0", "$0"))
 		}
 	}
 
-	return ""
+	return str
 }

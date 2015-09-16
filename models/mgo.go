@@ -36,6 +36,9 @@ var (
 	DbConf     *mgo.Collection // Config表对象
 	DbRedirect *mgo.Collection // Redirect表对象
 	Option     Conf            // 博客配置
+	Keys       map[string]Key  // 关键字列表
+	Tags       []SC_Tag        // 标签列表
+	Redirects  []SC_Redirect   // 内链列表
 )
 
 // 初始化
@@ -142,6 +145,9 @@ func init() {
 
 	// 获取配置信息
 	getOption()
+
+	// 获取关键字, 标签, 内链列表
+	getKeys()
 }
 
 // 创建一条数据
@@ -234,7 +240,14 @@ func Tag(caption, slug string) error {
 	tag.Caption = caption
 	tag.Slug = slug
 
-	return Insert(DbTag, tag)
+	// 添加数据
+	err := Insert(DbTag, tag)
+
+	// 更新关键字, 内链, 标签列表
+	getKeys()
+
+	// 返回错误信息
+	return err
 }
 
 // 保存内链数据
@@ -248,7 +261,56 @@ func (this *SC_Redirect) Save() error {
 	// 创建编号
 	this.Id = bson.NewObjectId()
 	// 添加数据
-	return Insert(DbRedirect, this)
+	err := Insert(DbRedirect, this)
+
+	// 更新关键字, 内链, 标签列表
+	getKeys()
+
+	// 返回错误信息
+	return err
+}
+
+// 获取标签, 内链, 关键字列表
+func getKeys() {
+	// 获取内链列表
+	GetAllByQuery(DbRedirect, nil, &Redirects)
+	// 获取标签列表
+	GetAllByQuery(DbTag, nil, &Tags)
+
+	// 将标签列表加入关键字列表中
+	for _, t := range Tags {
+		// 如果标签不存在于关键字列表中
+		if _, ok := Keys[t.Caption]; !ok {
+			// 将标签加入关键字列表中
+			Keys[t.Caption] = Key{
+				Caption: t.Caption,
+				Slug:    t.Slug,
+				IsTag:   true,
+			}
+		}
+	}
+
+	// 将内链列表加入关键字列表中
+	for _, r := range Redirects {
+		// 对标签进行循环
+		for _, t := range Tags {
+			// 如果标签名称与内链名称相同
+			if r.Caption == t.Caption {
+				// 如果关键字类型为标签
+				if Keys[t.Caption].IsTag {
+					// 将此标签从关键字列表中去除
+					delete(Keys, t.Caption)
+				}
+			}
+		}
+
+		// 将内链加入关键字列表中
+		Keys[r.Caption] = Key{
+			Caption: r.Caption,
+			Slug:    r.Link,
+			IsTag:   false,
+		}
+	}
 }
 
 // 设置配置信息

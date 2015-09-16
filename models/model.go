@@ -37,11 +37,9 @@ type SC_Redirect struct {
 	Link    string        `bson:"link"`    // 跳转地址
 }
 
-type SC_Comment struct {
-	Id       bson.ObjectId `_id`
-	Name     string        `bson:"name"`     // 评论用户名称
-	Email    string        `bson:"email"`    // 评论用户邮箱
-	Url      string        `bson:"url"`      // 评论用户网址
-	Content  string        `bson:"content"`  // 评论内容
-	ParentId bson.ObjectId `bson:"parentid"` // 所属上级
+// 关键字结构
+type Key struct {
+	Caption string // 关键字名称
+	Slug    string // 关键字固定连接
+	IsTag   bool   // 是否为标签
 }
