@@ -88,8 +88,6 @@ func (this *IndexController) View() {
 	this.Data["Tags"] = scpost.Tags
 	// 设置内容
 	this.Data["Html"] = scpost.Html
-	// 设置替换关键字
-	this.Data["Keys"] = models.Keys
 
 	if scpost.Type == "post" {
 		// 定义两个Post列表
@@ -226,7 +224,6 @@ func (this *IndexController) TagList() {
 
 	// 获取文章数量
 	count := models.Count(models.DbPost, bson.M{"type": "post", "tags": tag})
-	println(count)
 
 	// 获取分页数据
 	page := pagination.NewPaginator(this.Ctx.Request, 10, count)
