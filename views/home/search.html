@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="keywords" content="{{.Keywords}}">
     <meta name="description" content="{{.Description}}">
-    <title>{{.SiteName}} - {{.SubTitle}}</title>
+    <title>搜索 "{{.Key}}" - {{.SiteName}}</title>
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -19,7 +20,7 @@
 <div class="search">
     <form action="/search" method="get">
         <input type="text" placeholder="请输入要搜索的内容..." name="q" autocomplete="off">
-        <button type="submit">搜索</button>
+        <button>搜索</button>
     </form>
 </div>
 <header class="header">
@@ -35,7 +36,21 @@
         <small>{{.SubTitle}}</small>
     </div>
 </header>
+<ol class="breadcrumb container">
+    <li><a href="/" title="首页">首页</a></li>
+    <li class="active">搜索 "{{.Key}}"</li>
+</ol>
 <section class="article-list container">
+    {{if .NotSearch}}
+    <div class="notsearch">未能找到相关文章，或许可以尝试以下标签。</div>
+    {{if .TagsList}}
+    <ul class="tagslist">
+        {{range .TagsList}}
+        <li><a href="/tag/{{.Slug}}" title="{{.Caption}}">{{.Caption}}</a></li>
+        {{end}}
+    </ul>
+    {{end}}
+    {{end}}
     {{range .Lists}}
     <article>
         <header><a href="/{{.Slug}}" title="{{.Caption}}" class="title">{{.Caption}}</a></header>

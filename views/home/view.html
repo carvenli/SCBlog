@@ -7,98 +7,64 @@
     <meta name="keywords" content="{{.Keywords}}">
     <meta name="description" content="{{.Description}}">
     <title>{{.Caption}} - {{.SiteName}}</title>
-    <link rel="stylesheet" href="/static/css/planeui.min.css">
-    <link rel="stylesheet" href="/static/js/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/js/editormd/css/editormd.preview.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 <!--[if lte IE 9]>
-<div class="pui-layout pui-browsehappy">
-    <a href="javascript:;" class="pui-close" onclick="document.body.removeChild(this.parentNode);"></a>
-    <p>您正在使用 <strong class="pui-text-yellow pui-text-xl">过时</strong> 的非现代浏览器，<strong class="pui-text-success pui-text-xl">91.23%</strong> 的人选择 <a href="http://browsehappy.com/" target="_blank" class="pui-text-green-400 pui-text-xl"><strong>升级浏览器</strong></a>，获得了更好、更安全的浏览体验！</p>
+<div class="browsehappy">
+    <p>您正在使用 <strong class="yellow">过时</strong> 的非现代浏览器，<strong class="success">91.23%</strong> 的人选择 <a href="http://browsehappy.com/" target="_blank"><strong class="green">升级浏览器</strong></a>，获得了更好、更安全的浏览体验！</p>
 </div>
 <![endif]-->
-<header>
-    <nav class="menu">
-        <ul class="pui-menu pui-menu-inline clear blog-menu">
-            <li>
-                <a href="javascript:;"><span class="fa fa-navicon fa-2x"></span></a>
-                <ul class="pui-menu pui-menu-dropdown" style="width:200%;">
-                    <li><a href="/" title="{{.Title}}">首页</a></li>
-                    {{range .Pages}}
-                    <li><a href="/{{.Slug}}" title="{{.Caption}}">{{.Caption}}</a></li>
-                    {{end}}
-                    <li><a href="javascript:;" class="search">文章搜索</a></li>
-                </ul>
-            </li>
+<div class="search">
+    <form action="/search" method="get">
+        <input type="text" placeholder="请输入要搜索的内容..." name="q" autocomplete="off">
+        <button type="submit">搜索</button>
+    </form>
+</div>
+<header class="header">
+    <nav>
+        <ul class="menu">
+            <li class="back"><a href="/" title="返回首页"><< 返回首页</a></li>
+            <li><a href="javascript:;" title="文章搜索" id="search">文章搜索</a></li>
+            {{range .Pages}}<li><a href="/{{.Slug}}" title="{{.Caption}}">{{.Caption}}</a></li>{{end}}
         </ul>
-        <div id="search-form" class="pui-hide">
-            <form action="/search" method="get" class="pui-search pui-round">
-                <input type="text" name="q" class="pui-search-keywords" placeholder="搜索...">
-                <button type="submit" class="pui-search-submit" name="submit-pui-search" value=""></button>
-            </form>
-        </div>
     </nav>
 </header>
-<article class="article">
-    <h1>{{.Caption}}</h1>
-    {{if eq .Type "post"}}
-    <section class="info">
-        <img src="{{Gravatar $.Email 80}}" class="pui-img-circle pui-img-xxxs" alt="{{.Author}}">
+<article class="container article">
+    <header>
+        <h1>{{.Caption}}</h1>
+        <img src="{{Gravatar .Email 80}}" class="circle" alt="{{.Author}}">
         <span class="author">{{.Author}}</span>
         <span class="date" data-time="{{.Created}}"><span class="time"></span></span>
-        <span class="tags">{{range .Tags}}<a class="tag" href="/tag/{{. | GetTagSlug}}">{{.}}</a>{{end}}</span>
-    </section>
-    {{end}}
-    <article class="editormd-html-preview">{{str2html .Html}}</article>
+        <span class="tags">{{if .Tags}}标签：{{range .Tags}}<a class="tag" href="/tag/{{. | GetTagSlug}}">{{.}}</a>{{end}}{{end}}</span>
+    </header>
+    <div class="editormd-html-preview content">{{str2html .Html}}</div>
     {{if eq .Type "post"}}
     <footer>
-        {{if .IsPrev}}
         <section>
             <span>上一篇</span>
-            <a href="/{{.IsPrev.Link}}" title="{{.IsPrev.Caption}}">{{.IsPrev.Caption}}</a>
+            {{if .IsPrev}}<a href="/{{.IsPrev.Link}}" title="{{.IsPrev.Caption}}">{{.IsPrev.Caption}}</a>{{else}}<a href="javascript:;" title="没有文章">没有文章</a>{{end}}
         </section>
-        {{else}}
-        <section>
-            <span>上一篇</span>
-            <p>没有文章</p>
-        </section>
-        {{end}}
-        {{if .IsNext}}
         <section>
             <span>下一篇</span>
-            <a href="{{.IsNext.Link}}" title="{{.IsNext.Caption}}">{{.IsNext.Caption}}</a>
+            {{if .IsNext}}<a href="/{{.IsNext.Link}}" title="{{.IsNext.Caption}}">{{.IsNext.Caption}}</a>{{else}}<a href="javascript:;" title="没有文章">没有文章</a>{{end}}
         </section>
-        {{else}}
-        <section>
-            <span>下一篇</span>
-            <p>没有文章</p>
-        </section>
-        {{end}}
     </footer>
     {{end}}
 </article>
-<section class="comment"><div id="SOHUCS"></div></section>
+<section class="container comment"><div id="SOHUCS"></div></section>
 <footer class="footer">
     <p>&copy;2013双擦 让我们一起来双擦吧！。<script src="http://s6.cnzz.com/stat.php?id=5508481&web_id=5508481" language="JavaScript"></script></p>
 </footer>
-<a href="javascript:;" class="fa fa-arrow-circle-up fa-3x pui-text-blue-400" id="go-top"></a>
+<a href="javascript:;" class="fa fa-arrow-circle-up fa-3x" id="gotop"></a>
 </body>
 <script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/planeui.min.js"></script>
-<script src="/static/js/jquery.unveil.js"></script>
-<script src="/static/js/common.js"></script>
+<script src="/static/js/scblog.js"></script>
 <script charset="utf-8" src="http://changyan.sohu.com/upload/changyan.js" ></script>
 <script>
 $(function(){
-    $('.article article a').each(function(){
-        $(this).attr('target','_blank');
-    });
-
-    $('.markdown-toc-list li a').each(function(){
-        $(this).attr('target','_self');
-    });
-
     window.changyan.api.config({
         appid: 'cyrWXnxq7',
         conf: 'prod_6a9f24533ca54097f5a18d03ac882b33'

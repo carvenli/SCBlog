@@ -10,9 +10,13 @@
  */
 
 (function() {
+
     var factory = function (exports) {
-        var pluginName   = "image-dialog";
-        exports.fn.imageDialog = function() {
+
+		var pluginName   = "image-dialog";
+
+		exports.fn.imageDialog = function() {
+
             var _this       = this;
             var cm          = this.cm;
             var lang        = this.lang;
@@ -23,24 +27,44 @@
             var imageLang   = lang.dialog.image;
             var classPrefix = this.classPrefix;
             var iframeName  = classPrefix + "image-iframe";
-            var dialogName  = classPrefix + pluginName, dialog;
+			var dialogName  = classPrefix + pluginName, dialog;
 
-            cm.focus();
+			cm.focus();
 
             var loading = function(show) {
                 var _loading = dialog.find("." + classPrefix + "dialog-mask");
                 _loading[(show) ? "show" : "hide"]();
             };
 
-            if (editor.find("." + dialogName).length < 1){
+            if (editor.find("." + dialogName).length < 1)
+            {
                 var guid   = (new Date).getTime();
                 var action = settings.imageUploadURL + (settings.imageUploadURL.indexOf("?") >= 0 ? "&" : "?") + "guid=" + guid;
 
-                if (settings.crossDomainUpload){
+                if (settings.crossDomainUpload)
+                {
                     action += "&callback=" + settings.uploadCallbackURL + "&dialog_id=editormd-image-dialog-" + guid;
                 }
 
-                var dialogContent = ( (settings.imageUpload) ? "<form action=\"" + action +"\" target=\"" + iframeName + "\" method=\"post\" enctype=\"multipart/form-data\" class=\"" + classPrefix + "form\">" : "<div class=\"" + classPrefix + "form\">" ) + ( (settings.imageUpload) ? "<iframe name=\"" + iframeName + "\" id=\"" + iframeName + "\" guid=\"" + guid + "\"></iframe>" : "" ) + "<label>" + imageLang.url + "</label>" + "<input type=\"text\" data-url />" + (function(){return (settings.imageUpload) ? "<div class=\"" + classPrefix + "file-input\">" + "<input type=\"file\" name=\"" + classPrefix + "image-file\" accept=\"*/*\" />" + "<input type=\"submit\" value=\"" + imageLang.uploadButton + "\" />" + "</div>" : "";})() + "<br/>" + "<label>" + imageLang.alt + "</label>" + "<input type=\"text\" value=\"" + selection + "\" data-alt />" + "<br/>" + "<label>" + imageLang.link + "</label>" + "<input type=\"text\" value=\"http://\" data-link />" + "<br/>" + ( (settings.imageUpload) ? "</form>" : "</div>");
+                var dialogContent = ( (settings.imageUpload) ? "<form action=\"" + action +"\" target=\"" + iframeName + "\" method=\"post\" enctype=\"multipart/form-data\" class=\"" + classPrefix + "form\">" : "<div class=\"" + classPrefix + "form\">" ) +
+                                        ( (settings.imageUpload) ? "<iframe name=\"" + iframeName + "\" id=\"" + iframeName + "\" guid=\"" + guid + "\"></iframe>" : "" ) +
+                                        "<label>" + imageLang.url + "</label>" +
+                                        "<input type=\"text\" data-url />" + (function(){
+                                            return (settings.imageUpload) ? "<div class=\"" + classPrefix + "file-input\">" +
+                                                                                "<input type=\"file\" name=\"" + classPrefix + "image-file\" accept=\"image/*\" />" +
+                                                                                "<input type=\"submit\" value=\"" + imageLang.uploadButton + "\" />" +
+                                                                            "</div>" : "";
+                                        })() +
+                                        "<br/>" +
+                                        "<label>" + imageLang.alt + "</label>" +
+                                        "<input type=\"text\" value=\"" + selection + "\" data-alt />" +
+                                        "<br/>" +
+                                        "<label>" + imageLang.link + "</label>" +
+                                        "<input type=\"text\" value=\"http://\" data-link />" +
+                                        "<br/>" +
+                                    ( (settings.imageUpload) ? "</form>" : "</div>");
+
+                //var imageFooterHTML = "<button class=\"" + classPrefix + "btn " + classPrefix + "image-manager-btn\" style=\"float:left;\">" + imageLang.managerButton + "</button>";
 
                 dialog = this.createDialog({
                     title      : imageLang.title,
@@ -61,16 +85,20 @@
                             var alt  = this.find("[data-alt]").val();
                             var link = this.find("[data-link]").val();
 
-                            if (url === ""){
+                            if (url === "")
+                            {
                                 alert(imageLang.imageURLEmpty);
                                 return false;
                             }
 
-                            var altAttr = (alt !== "") ? " \"" + alt + "\"" : "";
+							var altAttr = (alt !== "") ? " \"" + alt + "\"" : "";
 
-                            if (link === "" || link === "http://"){
+                            if (link === "" || link === "http://")
+                            {
                                 cm.replaceSelection("![" + alt + "](" + url + altAttr + ")");
-                            }else{
+                            }
+                            else
+                            {
                                 cm.replaceSelection("[![" + alt + "](" + url + altAttr + ")](" + link + altAttr + ")");
                             }
 
@@ -93,26 +121,38 @@
 
                 dialog.attr("id", classPrefix + "image-dialog-" + guid);
 
-                if (!settings.imageUpload) {
+				if (!settings.imageUpload) {
                     return ;
                 }
 
-                var fileInput  = dialog.find("[name=\"" + classPrefix + "image-file\"]");
+				var fileInput  = dialog.find("[name=\"" + classPrefix + "image-file\"]");
 
-                fileInput.bind("change", function() {
-                    var fileName  = fileInput.val();
+				fileInput.bind("change", function() {
+					var fileName  = fileInput.val();
+					var isImage   = new RegExp("(\\.(" + settings.imageFormats.join("|") + "))$"); // /(\.(webp|jpg|jpeg|gif|bmp|png))$/
 
-                    if (fileName === ""){
-                        alert(imageLang.uploadFileEmpty);
+					if (fileName === "")
+					{
+						alert(imageLang.uploadFileEmpty);
+                        
                         return false;
-                    }
+					}
+					
+                    if (!isImage.test(fileName))
+					{
+						alert(imageLang.formatNotAllowed + settings.imageFormats.join(", "));
+                        
+                        return false;
+					}
 
                     loading(true);
 
                     var submitHandler = function() {
+
                         var uploadIframe = document.getElementById(iframeName);
 
                         uploadIframe.onload = function() {
+                            
                             loading(false);
 
                             var body = (uploadIframe.contentWindow ? uploadIframe.contentWindow : uploadIframe.contentDocument).document.body;
@@ -120,9 +160,12 @@
 
                             json = (typeof JSON.parse !== "undefined") ? JSON.parse(json) : eval("(" + json + ")");
 
-                            if (json.success === 1){
+                            if (json.success === 1)
+                            {
                                 dialog.find("[data-url]").val(json.url);
-                            }else{
+                            }
+                            else
+                            {
                                 alert(json.message);
                             }
 
@@ -131,35 +174,45 @@
                     };
 
                     dialog.find("[type=\"submit\"]").bind("click", submitHandler).trigger("click");
-                });
+				});
             }
 
-            dialog = editor.find("." + dialogName);
-            dialog.find("[type=\"text\"]").val("");
-            dialog.find("[type=\"file\"]").val("");
-            dialog.find("[data-link]").val("http://");
+			dialog = editor.find("." + dialogName);
+			dialog.find("[type=\"text\"]").val("");
+			dialog.find("[type=\"file\"]").val("");
+			dialog.find("[data-link]").val("http://");
 
-            this.dialogShowMask(dialog);
-            this.dialogLockScreen();
-            dialog.show();
-        };
-    };
+			this.dialogShowMask(dialog);
+			this.dialogLockScreen();
+			dialog.show();
 
-    // CommonJS/Node.js
-    if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
+		};
+
+	};
+
+	// CommonJS/Node.js
+	if (typeof require === "function" && typeof exports === "object" && typeof module === "object")
+    {
         module.exports = factory;
-    }else if (typeof define === "function"){
-        if (define.amd) {
-            define(["editormd"], function(editormd) {
+    }
+	else if (typeof define === "function")  // AMD/CMD/Sea.js
+    {
+		if (define.amd) { // for Require.js
+
+			define(["editormd"], function(editormd) {
                 factory(editormd);
             });
-        } else {
-            define(function(require) {
+
+		} else { // for Sea.js
+			define(function(require) {
                 var editormd = require("./../../editormd");
                 factory(editormd);
             });
-        }
-    }else{
+		}
+	}
+	else
+	{
         factory(window.editormd);
-    }
+	}
+
 })();

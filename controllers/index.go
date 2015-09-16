@@ -178,9 +178,18 @@ func (this *IndexController) Search() {
 
 	if len(scposts) <= 0 {
 		this.Data["NotSearch"] = true
+
+		// 定义一个SC_Tag列表
+		var tagslist []models.SC_Tag
+
+		// 获取所有标签
+		models.GetAllByQuery(models.DbTag, nil, &tagslist)
+
+		// 设置标签列表
+		this.Data["TagsList"] = tagslist
 	}
 
-	this.TplNames = "home/index.html"
+	this.TplNames = "home/search.html"
 }
 
 // 标签页面

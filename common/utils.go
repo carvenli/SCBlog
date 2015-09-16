@@ -66,10 +66,12 @@ func Preview(str string, length int) string {
 	// 如果截取长度大于字符串长度
 	if length > rl {
 		// 截取长度等于字符串长度
-		length = rl
+		str = string(rs[0:rl])
+	} else {
+		str = string(rs[0:length]) + "..."
 	}
 
-	return string(rs[0:length])
+	return strings.Replace(str, "\n", "", -1)
 }
 
 // 获取Id

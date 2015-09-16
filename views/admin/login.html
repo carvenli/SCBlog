@@ -1,87 +1,33 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>登录 - SCBlog</title>
-    <link rel="stylesheet" href="/static/css/planeui.min.css">
-    <link rel="stylesheet" href="/static/css/login.css">
+    <title>管理登录</title>
+    <style>
+    body,html{height:100%}body{margin:0;background-color:#d9dee2;background-image:-webkit-gradient(linear,left top,left bottom,from(#ebeef2),to(#d9dee2));background-image:-webkit-linear-gradient(top,#ebeef2,#d9dee2);background-image:linear-gradient(top,#ebeef2,#d9dee2);font:9pt 'Lucida Sans Unicode',Trebuchet MS,Arial,Helvetica}form{top:50%;left:50%;z-index:0;margin:-150px 0 0 -230px;padding:30px;height:auto;max-width:25pc;border-radius:3px;background-color:#fff;background-image:-webkit-gradient(linear,left top,left bottom,from(#fff),to(#eee));background-image:-webkit-linear-gradient(top,#fff,#eee);background-image:linear-gradient(top,#fff,#eee);box-shadow:0 0 2px rgba(0,0,0,.2),0 1px 1px rgba(0,0,0,.2),0 3px 0 #fff,0 4px 0 rgba(0,0,0,.2),0 6px 0 #fff,0 7px 0 rgba(0,0,0,.2)}form,form:before{position:absolute}form:before{top:5px;right:5px;bottom:5px;left:5px;z-index:-1;border:1px dashed #ccc;box-shadow:0 0 0 1px #fff;content:''}h1{position:relative;margin:0 0 30px;color:#666;text-align:center;text-transform:uppercase;text-shadow:0 1px 0 hsla(0,0%,100%,.7),0 2px 0 rgba(0,0,0,.5);letter-spacing:4px;font:400 26px/1 Verdana,Helvetica}h1:after,h1:before{position:absolute;top:15px;width:90pt;height:1px;background-color:#777;content:""}h1:after{right:0;background-image:-webkit-gradient(linear,left top,right top,from(#777),to(#fff));background-image:-webkit-linear-gradient(left,#777,#fff);background-image:linear-gradient(left,#777,#fff)}h1:before{left:0;background-image:-webkit-gradient(linear,right top,left top,from(#777),to(#fff));background-image:-webkit-linear-gradient(right,#777,#fff);background-image:linear-gradient(right,#777,#fff)}fieldset{margin:0;padding:0 10px;max-width:353px;border:0}@media(max-width:460px){fieldset{padding-left:50px}input[name=captcha]{width:85%!important}}@media(min-width:461px){input[name=captcha]{width:53%!important}}.inputs input{margin:0 0 10px;padding:15px 15px 15px 30px;width:85%;border:1px solid #ccc;border-radius:5px;background:#f1f1f1;box-shadow:0 1px 1px #ccc inset,0 1px 0 #fff}input[name=captcha]{float:left}img{margin:2px 0 0 10px;border:1px solid #ccc;border-radius:5px;background:#efefef;box-shadow:0 1px 1px #ccc inset,0 1px 0 #fff;cursor:pointer}.inputs input:focus{outline:0;border-color:#e8c291;background-color:#fff;box-shadow:0 0 0 1px #e8c291 inset}.actions{margin:25px 0 0}button{float:left;padding:0;width:90pt;height:35px;border-color:#d69e31 #e3a037 #d5982d;border-style:solid;border-width:1px;border-radius:3px;background-color:#ffb94b;background-image:-webkit-gradient(linear,left top,left bottom,from(#fddb6f),to(#ffb94b));background-image:-webkit-linear-gradient(top,#fddb6f,#ffb94b);background-image:linear-gradient(top,#fddb6f,#ffb94b);box-shadow:0 0 1px rgba(0,0,0,.3),0 1px 0 hsla(0,0%,100%,.3) inset;color:#8f5a0a;text-shadow:0 1px 0 hsla(0,0%,100%,.5);font:700 15px Arial,Helvetica;cursor:pointer}button:focus,button:hover{background-color:#fddb6f;background-image:-webkit-gradient(linear,left top,left bottom,from(#ffb94b),to(#fddb6f));background-image:-webkit-linear-gradient(top,#ffb94b,#fddb6f);background-image:linear-gradient(top,#ffb94b,#fddb6f)}button:active{outline:0;box-shadow:0 1px 4px rgba(0,0,0,.5) inset}button::-moz-focus-inner{border:none}</style>
 </head>
 <body>
-<!--[if lte IE 9]>
-<div class="pui-layout pui-browsehappy">
-    <a href="javascript:;" class="pui-close" onclick="document.body.removeChild(this.parentNode);"></a>
-    <p>您正在使用 <strong class="pui-text-yellow pui-text-xl">过时</strong> 的非现代浏览器，<strong class="pui-text-success pui-text-xl">91.23%</strong> 的人选择 <a href="http://browsehappy.com/" target="_blank" class="pui-text-green-400 pui-text-xl"><strong>升级浏览器</strong></a>，获得了更好、更安全的浏览体验！</p>
-</div>
-<![endif]-->
-<div class="pui-layout pui-flexbox pui-flex-column login-layout">
-    <div class="pui-layout pui-flex login-main">
-        <div class="pui-layout pui-layout-fixed pui-layout-fixed-1200 login-main-con">
-            <div class="login-panel">
-                <form class="pui-form login-form" action="/admin/login" method="post">
-                    <div class="pui-form-group">
-                        <h1 class="pui-text-white pui-text-normal"><i class="planeui-logo-2x pui-text-xxxxxl"></i> 登录 Login</h1>
-                        <div role="username">
-                            <input type="text" name="username" maxlength="16" class="pui-unbordered" placeholder="用户名">
-                            <i class="fa fa-user pui-text-blue"></i>
-                        </div>
-                    </div>
-                    <div class="pui-form-group">
-                        <div role="password">
-                            <input type="password" name="password" maxlength="16" class="pui-unbordered" placeholder="密码">
-                            <i class="fa fa-lock pui-text-blue"></i>
-                        </div>
-                    </div>
-                    <div class="pui-form-group">
-                        <div role="captcha">
-                            <input type="text" name="captcha" maxlength="4" class="pui-unbordered" placeholder="验证码">
-                            <i class="fa fa-shield pui-text-blue"></i>
-                            <img src="/captcha" id="vcode">
-                        </div>
-                    </div>
-                    <div class="pui-form-group">
-                        <button class="pui-btn pui-btn-default pui-bg-blue-800 pui-unbordered">登录</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="pui-notice-popup pui-notice-position-br pui-hide">
-    <article class="pui-notice pui-notice-icon pui-notice-icon-error">
-        <i class="pui-close pui-close-circle"></i>
-        <div class="pui-notice-content"></div>
-    </article>
-</div>
+<form action="/admin/login" method="post">
+    <h1>登录到系统</h1>
+    <fieldset class="inputs">
+        <input name="username" type="text" placeholder="用户名" autofocus required>   
+        <input name="password" type="password" placeholder="密码" required>
+        <input name="captcha" type="text" maxlength="4" placeholder="验证码" required>
+        <img src="/captcha" class="vcode">
+    </fieldset>
+    <fieldset class="actions">
+        <button type="submit">登录</button>
+    </fieldset>
+</form>
+</body>
 <script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/planeui.min.js"></script>
 <script>
 $(function(){
-    $('#vcode').click(function(){
-        $('#vcode').attr('src', '/captcha?' + Math.random());
-    });
-
-    $('button').click(function(){
-        if($('#username').val() == ''){
-            $('#username').focus();
-            $('#username').attr('placeholder', '请输入登录用户名');
-            $('#username').addClass('error');
-        }else if($('#password').val() == ''){
-            $('#password').focus();
-            $('#password').attr('placeholder', '请输入登录密码');
-            $('#password').addClass('error');
-        }else if($('#captcha').val() == ''){
-            $('#captcha').focus();
-            $('#captcha').attr('placeholder', '请输入验证码');
-            $('#captcha').addClass('error');
-        }else{
-            $('form').submit();
-        }
-
-        return false;
+    $('.vcode').click(function(){
+        $('.vcode').attr('src', '/captcha?' + Math.random());
     });
 });
 </script>
-</body>
 </html>
