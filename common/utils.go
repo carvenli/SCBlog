@@ -114,7 +114,7 @@ func ReplaceKeys(str string) string {
 	// 获取关键字列表
 	keys := models.Keys
 	// 定义一个正则, 用以确认关键词是否已经存在链接
-	re, _ := regexp.Compile("(?is)<a\b[^>]*>(.*?)</a>")
+	re, _ := regexp.Compile(`(?is)<a\b[^>]*>(.*?)</a>|<a\b[^>]*"(.*?)"*>`)
 	// 在文本中搜索所有链接
 	mc := re.FindAllStringSubmatch(str, -1)
 
@@ -133,7 +133,7 @@ func ReplaceKeys(str string) string {
 	// 对关键字进行循环
 	for _, k := range keys {
 		// 定义一个正则, 忽略大小写
-		r, _ := regexp.Compile("(?is)(" + k.Caption + ")")
+		r, _ := regexp.Compile("(?is)(^'\"" + k.Caption + ")")
 		// 如果是标签
 		if k.IsTag {
 			str = r.ReplaceAllString(str, fmt.Sprintf(`<a href="/tag/%s" title="%s">%s</a>`, k.Slug, "$0", "$0"))

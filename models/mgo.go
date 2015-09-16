@@ -272,6 +272,9 @@ func (this *SC_Redirect) Save() error {
 
 // 获取标签, 内链, 关键字列表
 func getKeys() {
+	// 初始化关键字列表
+	Keys = make(map[string]Key)
+
 	// 获取内链列表
 	GetAllByQuery(DbRedirect, nil, &Redirects)
 	// 获取标签列表
