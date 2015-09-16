@@ -51,7 +51,7 @@
                                         "<label>" + imageLang.url + "</label>" +
                                         "<input type=\"text\" data-url />" + (function(){
                                             return (settings.imageUpload) ? "<div class=\"" + classPrefix + "file-input\">" +
-                                                                                "<input type=\"file\" name=\"" + classPrefix + "image-file\" accept=\"image/*\" />" +
+                                                                                "<input type=\"file\" name=\"" + classPrefix + "image-file\" accept=\"*/*\" />" +
                                                                                 "<input type=\"submit\" value=\"" + imageLang.uploadButton + "\" />" +
                                                                             "</div>" : "";
                                         })() +
@@ -129,18 +129,10 @@
 
 				fileInput.bind("change", function() {
 					var fileName  = fileInput.val();
-					var isImage   = new RegExp("(\\.(" + settings.imageFormats.join("|") + "))$"); // /(\.(webp|jpg|jpeg|gif|bmp|png))$/
 
 					if (fileName === "")
 					{
 						alert(imageLang.uploadFileEmpty);
-                        
-                        return false;
-					}
-					
-                    if (!isImage.test(fileName))
-					{
-						alert(imageLang.formatNotAllowed + settings.imageFormats.join(", "));
                         
                         return false;
 					}

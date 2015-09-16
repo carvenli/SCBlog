@@ -165,7 +165,7 @@ func (this *IndexController) Search() {
 	var scposts []models.SC_Post
 
 	// 获取文章数量
-	count := models.Count(models.DbPost, []bson.M{bson.M{"type": "post"}, bson.M{"caption": bson.M{"$regex": bson.RegEx{key, "i"}}}, bson.M{"tags": bson.M{"$regex": bson.RegEx{key, "i"}}}})
+	count := models.Count(models.DbPost, bson.M{"type": "post", "$or": []bson.M{bson.M{"caption": bson.M{"$regex": bson.RegEx{key, "i"}}}, bson.M{"tags": bson.M{"$regex": bson.RegEx{key, "i"}}}}})
 
 	// 获取分页数据
 	page := pagination.NewPaginator(this.Ctx.Request, 10, count)
@@ -173,7 +173,7 @@ func (this *IndexController) Search() {
 	this.Data["paginator"] = page
 
 	// 获取文章列表
-	models.GetDataByQuery(models.DbPost, page.Offset(), 10, "-created", []bson.M{bson.M{"type": "post"}, bson.M{"caption": bson.M{"$regex": bson.RegEx{key, "i"}}}, bson.M{"tags": bson.M{"$regex": bson.RegEx{key, "i"}}}}, &scposts)
+	models.GetDataByQuery(models.DbPost, page.Offset(), 10, "-created", bson.M{"type": "post", "$or": []bson.M{bson.M{"caption": bson.M{"$regex": bson.RegEx{key, "i"}}}, bson.M{"tags": bson.M{"$regex": bson.RegEx{key, "i"}}}}}, &scposts)
 	// 设置文章列表
 	this.Data["Lists"] = scposts
 
