@@ -54,7 +54,7 @@ table td{vertical-align:text-top;padding:5px 15px 5px 5px;background-color:#efef
 .article-list header .title{font-size:28px;font-weight:bold;display:block;margin-bottom:20px;}
 .article-list section .cover{color:#fff;width:100%;height:280px;background-size:cover;background-position: center;background-repeat:no-repeat;border-radius:6px;border:1px solid #ddd;box-sizing: border-box;margin-top:15px;margin-bottom:10px;}
 .article-list section .preview{line-height:28px;margin-top:10px;}
-.article-list .preview p{text-indent:21pt;word-wrap:break-word;}
+.article-list .preview p{word-wrap:break-word;}
 .article-list footer{margin-top:10px;}
 .article-list footer img{width:14px;width:1.4rem;vertical-align:middle;}
 .article-list footer .author{margin:0 15px;}

@@ -65,6 +65,23 @@
 <script charset="utf-8" src="http://changyan.sohu.com/upload/changyan.js" ></script>
 <script>
 $(function(){
+    {{if .Keys}}
+    var keys = [{{range .Keys}}{'caption':'{{.Caption}}','slug':'{{.Slug}}','istag':'{{.IsTag}}'},{{end}}]
+    var html = $('.content').html();
+
+    for(i=0;i<keys.length;i++){
+        var reg = new RegExp('(?!((<.*?)|(<a.*?)))('+keys[i].caption+')(?!(([^<>]*?)>)|([^>]*?</a>))','gi');
+
+        if(keys[i].istag){
+            html = html.replace(reg,'<a href="/tag/'+keys[i].slug+'" title="标签：$4">$4</a>');
+        }else{
+            html = html.replace(reg,'<a href="/go/'+keys[i].caption+'" title="点击跳转：$4" target="_blank">$4</a>');
+        }
+    }
+
+    $('.content').html(html)
+    {{end}}
+
     window.changyan.api.config({
         appid: 'cyrWXnxq7',
         conf: 'prod_6a9f24533ca54097f5a18d03ac882b33'

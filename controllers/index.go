@@ -87,7 +87,9 @@ func (this *IndexController) View() {
 	// 设置标签
 	this.Data["Tags"] = scpost.Tags
 	// 设置内容
-	this.Data["Html"] = common.ReplaceKeys(scpost.Html)
+	this.Data["Html"] = scpost.Html
+	// 设置替换关键字
+	this.Data["Keys"] = models.Keys
 
 	if scpost.Type == "post" {
 		// 定义两个Post列表

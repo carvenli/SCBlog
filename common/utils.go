@@ -108,39 +108,3 @@ func GetSlug(str string, isslug bool) string {
 
 	return strings.ToLower(slug)
 }
-
-// 替换关键字
-func ReplaceKeys(str string) string {
-	// 获取关键字列表
-	keys := models.Keys
-	// 定义一个正则, 用以确认关键词是否已经存在链接
-	re, _ := regexp.Compile(`(?is)<a\b[^>]*>(.*?)</a>|<a\b[^>]*"(.*?)"*>`)
-	// 在文本中搜索所有链接
-	mc := re.FindAllStringSubmatch(str, -1)
-
-	// 对匹配结果进行循环处理
-	for _, m := range mc {
-		// 循环关键字
-		for _, k := range keys {
-			// 如果关键字名称与链接名称相同
-			if strings.ToLower(k.Caption) == m[1] {
-				// 去除此关键字
-				delete(keys, k.Caption)
-			}
-		}
-	}
-
-	// 对关键字进行循环
-	for _, k := range keys {
-		// 定义一个正则, 忽略大小写
-		r, _ := regexp.Compile("(?is)(^'\"" + k.Caption + ")")
-		// 如果是标签
-		if k.IsTag {
-			str = r.ReplaceAllString(str, fmt.Sprintf(`<a href="/tag/%s" title="%s">%s</a>`, k.Slug, "$0", "$0"))
-		} else {
-			str = r.ReplaceAllString(str, fmt.Sprintf(`<a href="/go/%s" target="_blank" title="%s">%s</a>`, k.Caption, "$0", "$0"))
-		}
-	}
-
-	return str
-}
