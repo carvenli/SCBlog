@@ -59,7 +59,7 @@
             <div class="preview"><p>{{Preview .Html 150}}</p></div>
         </section>
         <footer>
-            <img src="{{Gravatar .Email 80}}" class="circle" alt="{{$.Author}}">
+            <img src="{{Gravatar $.Email 80}}" class="circle" alt="{{$.Author}}">
             <span class="author">{{$.Author}}</span>
             <span class="date" data-time="{{.Created}}"><span class="time"></span></span>
             <span class="tags">{{range .Tags}}<a class="tag" href="/tag/{{. | GetTagSlug}}">{{.}}</a>{{end}}</span>

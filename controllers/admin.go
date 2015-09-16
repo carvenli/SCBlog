@@ -80,9 +80,7 @@ func (this *AdminController) Edit() {
 		for _, v := range splits {
 			tags = append(tags, strings.TrimSpace(v))
 			s := common.GetSlug(v, false)
-			println("v: " + v)
-			println("s: " + s)
-			models.Tag(v, s)
+			models.Tag(strings.TrimSpace(v), strings.TrimSpace(s))
 		}
 
 		scpost := &models.SC_Post{

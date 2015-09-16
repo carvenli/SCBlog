@@ -159,6 +159,7 @@ func (this *IndexController) Search() {
 	this.Data["SubTitle"] = models.Option.SiteName
 	this.Data["Keywords"] = models.Option.Keywords
 	this.Data["Description"] = models.Option.Description
+	this.Data["Key"] = key
 
 	// 定义一个Post列表
 	var scposts []models.SC_Post
