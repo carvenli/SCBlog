@@ -35,10 +35,12 @@
 <article class="container article">
     <header>
         <h1>{{.Caption}}</h1>
+        {{if eq .Type "post"}}
         <img src="{{Gravatar .Email 80}}" class="circle" alt="{{.Author}}">
         <span class="author">{{.Author}}</span>
         <span class="date" data-time="{{.Created}}"><span class="time"></span></span>
         <span class="tags">{{if .Tags}}标签：{{range .Tags}}<a class="tag" href="/tag/{{. | GetTagSlug}}">{{.}}</a>{{end}}{{end}}</span>
+        {{end}}
     </header>
     <div class="editormd-html-preview content">{{str2html .Html}}</div>
     {{if eq .Type "post"}}

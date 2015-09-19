@@ -77,10 +77,15 @@ func (this *AdminController) Edit() {
 		tag := this.GetString("tag")
 		splits := strings.Split(tag, ",")
 		var tags []string
-		for _, v := range splits {
-			tags = append(tags, strings.TrimSpace(v))
-			s := common.GetSlug(v, false)
-			models.Tag(strings.TrimSpace(v), strings.TrimSpace(s))
+
+		if len(splits) > 0 && splits[0] != "" {
+			for _, v := range splits {
+				tags = append(tags, strings.TrimSpace(v))
+				s := common.GetSlug(v, false)
+				models.Tag(strings.TrimSpace(v), strings.TrimSpace(s))
+			}
+		} else {
+			tags = splits
 		}
 
 		scpost := &models.SC_Post{
