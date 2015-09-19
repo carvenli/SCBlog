@@ -85,7 +85,7 @@ table td{vertical-align:text-top;padding:5px 15px 5px 5px;background-color:#efef
 .article .content img{margin:30px auto;max-width:98%;border: 1px solid #eee;display: block;}
 .article .content a{color: #1980e6;text-decoration: underline;}
 .article .content code{display:block;padding:5px 10px;}
-.article .content ol{list-style-type:demical;}
+.article .content ol li{list-style-type: decimal;list-style-position: inside;}
 .article footer{margin:50px 0 30px;overflow: auto;}
 .article footer section{width: 100%;}
 .article footer section span{font-size:16px;font-style:italic;color: #c4c4c4;text-align:center;}
