@@ -10,6 +10,15 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+type ErrorController struct {
+	beego.Controller
+}
+
+func (c *ErrorController) Error404() {
+	c.Data["SiteName"] = models.Option.SiteName
+	c.TplNames = "404.html"
+}
+
 type IndexController struct {
 	beego.Controller
 }

@@ -10,6 +10,9 @@ func main() {
 	// 注册静态文件
 	beego.SetStaticPath("/static", "static")
 
+	// 自定义404错误页
+	beego.ErrorController(&controllers.ErrorController{})
+
 	// 首页路由
 	beego.Router("/", &controllers.IndexController{}, "get:Index")
 	// 文章路由
