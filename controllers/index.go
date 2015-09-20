@@ -88,6 +88,8 @@ func (this *IndexController) View() {
 	this.Data["Tags"] = scpost.Tags
 	// 设置内容
 	this.Data["Html"] = scpost.Html
+	// 设置ID
+	this.Data["Id"] = scpost.Id.Hex()
 
 	if scpost.Type == "post" {
 		// 定义两个Post列表
