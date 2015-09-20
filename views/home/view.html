@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/js/editormd/css/editormd.preview.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <script>var duoshuoQuery = {short_name:"lovekk"};</script>
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -56,22 +57,18 @@
     </footer>
     {{end}}
 </article>
-<section class="container comment"><div id="SOHUCS" sid="{{.Id}}"></div></section>
+<section class="container comment"><div class="ds-thread" data-thread-key="{{.Id}}" data-title="{{.Caption}}" data-url="http://www.lovekk.org/{{.Slug}}/"></div></section>
 <footer class="footer">
     <p>&copy;2013双擦 让我们一起来双擦吧！。<script src="http://s6.cnzz.com/stat.php?id=5508481&web_id=5508481" language="JavaScript"></script></p>
 </footer>
 <a href="javascript:;" class="fa fa-arrow-circle-up fa-3x" id="gotop"></a>
 </body>
 <script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/embed.js"></script>
 <script src="/static/js/scblog.js"></script>
-<script charset="utf-8" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+
 <script>
 $(function(){
-    window.changyan.api.config({
-        appid: 'cyrWXnxq7',
-        conf: 'prod_6a9f24533ca54097f5a18d03ac882b33'
-    });
-
     $('.content a').each(function(){
         $(this).attr('target','_blank');
     });

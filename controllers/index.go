@@ -90,6 +90,8 @@ func (this *IndexController) View() {
 	this.Data["Html"] = scpost.Html
 	// 设置ID
 	this.Data["Id"] = scpost.Id.Hex()
+	// 设置Slug
+	this.Data["Slug"] = scpost.Slug
 
 	if scpost.Type == "post" {
 		// 定义两个Post列表
