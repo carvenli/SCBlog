@@ -58,6 +58,7 @@ func main() {
 	beego.AddFuncMap("GetId", common.GetId)
 	beego.AddFuncMap("Gravatar", common.Gravatar)
 	beego.AddFuncMap("GetTagSlug", common.GetTagSlug)
+	beego.AddFuncMap("LoadTimes", common.LoadTimes)
 
 	beego.Run()
 }

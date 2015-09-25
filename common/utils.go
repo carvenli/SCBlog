@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/ylqjgm/SCBlog/models"
 	"gopkg.in/mgo.v2/bson"
@@ -107,4 +108,9 @@ func GetSlug(str string, isslug bool) string {
 	}
 
 	return strings.ToLower(slug)
+}
+
+// 获取运行时间
+func LoadTimes(startTime time.Time) string {
+	return fmt.Sprintf("%dms", time.Now().Sub(startTime)/1000000)
 }

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"strings"
+	"time"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
@@ -28,6 +29,7 @@ func (this *IndexController) Prepare() {
 	this.Data["SubTitle"] = models.Option.SubTitle
 	this.Data["Author"] = models.Option.Author
 	this.Data["Email"] = models.Option.Email
+	this.Data["StartTime"] = time.Now()
 
 	// 定义一个Post列表
 	var ps []models.SC_Post
